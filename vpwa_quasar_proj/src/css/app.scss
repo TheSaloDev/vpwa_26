@@ -1,1 +1,36 @@
 // app global css
+body {
+  background: #b683e6;
+}
+
+.q-field--outlined .q-field__control {
+  background: $form;
+  border-radius: 10px;
+}
+
+.logreg-box {
+    padding:2rem;
+    width: 50rem;
+    height: auto;
+    background-color: #ffffff;
+
+}
+
+.logreg-btn {
+    width: 15rem;
+    height: 4rem;
+    margin: 0.5rem;
+}
+
+.logreg-inpt {
+    width: 80%;
+}
+
+// .namesurname-box {
+//     width: 90%;
+// }
+
+.namesurname {
+    width: 80%;
+    gap: 24px; 
+}

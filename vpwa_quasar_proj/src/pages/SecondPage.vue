@@ -1,6 +1,11 @@
 <template>
   <q-page class="flex flex-center">
-    <q-btn color="secondary" to="/login" label="I changed something" no-caps />
+    <q-btn
+      color="secondary"
+      to="/register"
+      label="I changed something"
+      no-caps
+    />
   </q-page>
 </template>
 
