@@ -1,94 +1,71 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <q-layout view="hHh lpR fFf">
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.label"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+    <q-drawer v-model="drawer" show-if-above side="left" bordered>
+  <q-list>
+    <q-item-label header>Channels</q-item-label>
+    <q-item
+      v-for="c in channels"
+      :key="c.id"
+      clickable
+      :to="`/channel/${c.id}`"
+      active-class="bg-grey-3"
+    >
+      <q-item-section avatar><q-icon name="tag" /></q-item-section>
+      <q-item-section>{{ c.name }}</q-item-section>
+    </q-item>
+  </q-list>
+</q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer v-if="isLoggedIn" class="footer">
+      <div class="footer-row">
+        <UserProfile />
+        <div class="command-wrap">
+          <CommandLine />
+        </div>
+      </div>
+    </q-footer>
+
   </q-layout>
 </template>
 
-<script setup lang="ts">
-import { ref } from "vue";
-import EssentialLink, {
-  type EssentialLinkProps
-} from "@/components/EssentialLink.vue";
+<script setup>
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import UserProfile from '@/components/UserProfile.vue'
+import CommandLine from '@/components/CommandLine.vue'
 
-const linksList: EssentialLinkProps[] = [
-  {
-    label: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev"
-  },
-  {
-    label: "GitHub",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework"
-  },
-  {
-    label: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev"
-  },
-  {
-    label: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev"
-  },
-  {
-    label: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev"
-  },
-  {
-    label: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev"
-  },
-  {
-    label: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev"
-  }
-];
+const router = useRouter()
 
-const leftDrawerOpen = ref(false);
+const isLoggedIn = !!localStorage.getItem('nickname')
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
+onMounted(() => {
+  if (!isLoggedIn) router.replace('/register')
+})
+
+
+import { ref } from 'vue'
+import { channels } from '@/data/channels'
+const drawer = ref(true)
 </script>
+
+<style scoped>
+.footer {
+  background: transparent;
+}
+
+.footer-row {
+  display: flex;
+  align-items: flex-end;   /* профиль и строка выровнены по нижнему краю */
+  gap: 16px;
+  padding: 8px 16px;
+}
+
+.command-wrap {
+  flex: 1;
+}
+</style>
