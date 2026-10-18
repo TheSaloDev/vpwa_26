@@ -28,7 +28,7 @@ defineProps({
   users: { type: Array, default: () => [] },
 })
 
-const statuses = {
+const statuses = {  //TODO maybe to different file
   online: { label: 'Online', color: 'positive' },
   invisible: { label: 'Offline', color: 'grey' },
   busy: { label: 'Busy', color: 'negative' },

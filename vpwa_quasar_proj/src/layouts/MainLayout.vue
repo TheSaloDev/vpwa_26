@@ -44,7 +44,7 @@ const router = useRouter()
 const isLoggedIn = !!localStorage.getItem('nickname')
 
 onMounted(() => {
-  if (!isLoggedIn) router.replace('/register')
+  if (!isLoggedIn) router.replace('/login')
 })
 
 

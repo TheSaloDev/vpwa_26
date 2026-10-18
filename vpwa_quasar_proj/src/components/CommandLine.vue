@@ -33,7 +33,6 @@ const nickname = localStorage.getItem('nickname') || ''
 const text = ref('')
 const log = ref([])
 
-// открытый сейчас канал (undefined, если мы не на странице канала)
 const channel = computed(() =>
   channels.find((c) => c.id === route.params.id)
 )
@@ -50,13 +49,12 @@ const commands = {
   help: () => 'Available commands: /help, /clear, /notify <text>. Plain text is sent to the open channel.',
   clear: () => {
     log.value = []
-    return null   // ничего не выводим
+    return null
   },
   notify: (args) => {
     const message = args.join(' ')
     if (!message) return 'Usage: /notify <text>'
 
-    // разрешение на системные уведомления нужно запросить по действию пользователя
     if ('Notification' in window && Notification.permission === 'default') {
       Notification.requestPermission()
     }
@@ -68,7 +66,7 @@ const commands = {
 
 function addLog(...lines) {
   log.value.push(...lines)
-  log.value = log.value.slice(-8) // последние 8 строк
+  log.value = log.value.slice(-8)
 }
 
 function sendMessage(msg) {
@@ -83,7 +81,7 @@ function sendMessage(msg) {
   })
 
   channel.value.messages.push({
-    id: Date.now(),      // уникальный id
+    id: Date.now(),
     author: nickname,
     text: msg,
     time,
@@ -104,7 +102,7 @@ function submit() {
       if (!cmd) {
         addLog(`> ${raw}`, `Unknown command: /${name}. Type /help`)
       } else {
-        const answer = cmd(args)            // аргументы передаются здесь
+        const answer = cmd(args)
         if (answer !== null) addLog(`> ${raw}`, answer)
       }
     } else {
@@ -114,7 +112,7 @@ function submit() {
     console.error(e)
     addLog(`> ${raw}`, 'Command failed, see console')
   } finally {
-    text.value = ''                         // поле очищается всегда
+    text.value = ''
   }
 }
 
@@ -135,10 +133,8 @@ function showNotification(message) {
     'Notification' in window && Notification.permission === 'granted'
 
   if (AppVisibility.appVisible === false && canSystem) {
-    // вкладка скрыта и есть разрешение: системное уведомление
     new Notification('New notification', { body: message })
   } else {
-    // во всех остальных случаях: уведомление внутри приложения
     Notify.create({
       message,
       caption: 'Notification',
@@ -154,7 +150,7 @@ function showNotification(message) {
 
 <style scoped>
 .terminal {
-  position: relative;          /* точка отсчёта для лога */
+  position: relative;
   background: #1d1d1d;
   color: #d0d0d0;
   font-family: monospace;
@@ -162,10 +158,10 @@ function showNotification(message) {
 }
 
 .log {
-  position: absolute;          /* не участвует в расчёте высоты футера */
+  position: absolute;
   left: 0;
   right: 0;
-  bottom: 100%;                /* сразу над полем ввода */
+  bottom: 100%;
   max-height: 140px;
   overflow-y: auto;
   padding: 8px 16px;

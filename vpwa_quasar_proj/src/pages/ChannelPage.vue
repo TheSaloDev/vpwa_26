@@ -80,7 +80,7 @@ function isMention(text) {
 }
 
 .messages {
-  padding: 16px 16px 100px; /* запас снизу, чтобы последнее сообщение не пряталось под футером */
+  padding: 16px 16px 100px;
 }
 
 .message-row {
@@ -96,13 +96,13 @@ function isMention(text) {
 
 
 .typing {
-  height: 20px;               /* место зарезервировано, список не прыгает */
+  height: 20px;
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 0 12px;
   font-size: 12px;
-  color: black;                              /* чуть темнее, чтобы читалось лучше */
+  color: black;
   opacity: 0;
   transition: opacity 0.2s;
 }

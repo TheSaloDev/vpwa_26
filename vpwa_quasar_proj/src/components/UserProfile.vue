@@ -66,14 +66,14 @@ function setStatus(value) {
 function onLogout() {
   localStorage.removeItem('nickname')
   localStorage.removeItem('status')
-  router.push('/register')
+  router.push('/login')
 }
 </script>
 
 <style scoped>
 .profile-btn {
-  width: 220px;                 /* фиксированная ширина, подберите свою */
-  justify-content: flex-start;  /* содержимое прижато влево */
+  width: 220px;
+  justify-content: flex-start;
   padding: 6px 12px 6px 3px;
   border-radius: 12px;
   background-color: #ffffff;

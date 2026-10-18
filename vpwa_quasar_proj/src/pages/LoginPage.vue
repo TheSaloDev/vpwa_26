@@ -48,7 +48,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const name = ref("");
 const nickname = ref("");
 const email = ref("");
 
